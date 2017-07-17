@@ -5,6 +5,7 @@ from tensorflow.python.framework import random_seed
 from tensorflow.python.framework import dtypes
 
 import collections
+import cv2
 
 
 def load_data(data_file):
@@ -12,10 +13,17 @@ def load_data(data_file):
   pixels = data['pixels'].tolist()
   width, height = 48, 48
   faces = []
+  i = 0
   for pixel_sequence in pixels:
     face = [int(pixel) for pixel in pixel_sequence.split(' ')]
     face = np.asarray(face).reshape(width, height)
+    # if i< 100:
+    #   cv2.imwrite('./valid_sets/%03d.jpg'%(i), face)
+    #   print(i)
+    #   i += 1
     faces.append(face)
+    # if i == 100:
+    #   return
   faces = np.asarray(faces)
   faces = np.expand_dims(faces, -1)
   emotions = pd.get_dummies(data['emotion']).as_matrix()
@@ -120,3 +128,10 @@ def input_data(
   validation = DataSet(validation_faces, validation_emotions, dtype=dtype, reshape=reshape, seed=seed)
   test = DataSet(test_faces, test_emotions, dtype=dtype, reshape=reshape, seed=seed)
   return Datasets(train=train, validation=validation, test=test)
+
+def _test():
+  import cv2
+  i = input_data('./data/fer2013/fer2013.csv')
+
+if __name__ == '__main__':
+  _test()
