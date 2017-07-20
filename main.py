@@ -1,42 +1,34 @@
-import sys
+import argparse
 from demo import demo
 from model import train_model, valid_model
 
+
 def run_demo(args):
-  if len(args) < 1:
-    demo('./models')
-  else:
-    demo(args[1])
+  demo(args.modelPath, args.showbox)
 
 def run_model(args):
-  if len(args) < 1:
-    show_usage()
-    exit()
-  if args[0] == 'train':
+
+  if args.tov == 'train':
     train_model()
-  elif args[0] == 'valid':
+  elif args.tov == 'valid':
     valid_model()
-  else:
-    show_usage()
-
-def show_usage():
-  divide_line = "*-------------------------------------*\n"
-  usage = ("|Usage: python3 model.py <train|valid>|\n")
-  print(divide_line ,usage, divide_line)
-
 
 def main():
-  args = sys.argv
-  if len(args) < 2:
-    print("Too few params.")
-    print("usage: python3 main.py <function>")
-    exit()
-  usage = args[1]
-  args = args[2:]
-
-  if usage == "demo":
+  parser = argparse.ArgumentParser()
+  parser.add_argument("func", type=str,
+                      help="Choose a func you want to run. <Demo> or <model>")
+  parser.add_argument("--modelPath", default="./models", type=str,
+                      help="Specify the path to models.")
+  parser.add_argument("--showbox", action="store_true",
+                      help="Options decide the box of faces whether to show.")
+  args = parser.parse_args()
+  func = args.func
+  print(args)
+  if func == "demo":
     run_demo(args)
-  elif usage == "model":
+  elif func == "model":
+    parser.add_argument("tov", default="train", type=str,
+                        help="Train or Valid models.")
     run_model(args)
   else :
     print("usage: python3 main.py <function>")

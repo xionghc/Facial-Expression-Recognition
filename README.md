@@ -17,8 +17,9 @@ Only tested in Ubuntu and macOS Sierra. Other platforms are not sure work well. 
 You will have to download the pre-trained models [here](http://pan.baidu.com/s/1i4TqHlb).
 Then run the demo that Detecting the face(s) in video captured by webcamera, and recognize the expression(s) in real-time.  
 ```shell
-python3 main.py demo <models path>
+python3 main.py demo
 ```
+And you can add `--showbox` option to show box of faces.
 
 ###### train models
 You can train models by yourself. Download the fer2013 datasets in [kaggle(91.97MB)](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data).
