@@ -64,7 +64,7 @@ def bias_variable(shape):
   return tf.Variable(initial)
 
 
-def train_model(_):
+def train_model():
   fer2013 = input_data('./data/fer2013/fer2013.csv')
   max_train_steps = 30001
 

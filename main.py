@@ -7,10 +7,9 @@ def run_demo(args):
   demo(args.modelPath, args.showbox)
 
 def run_model(args):
-
-  if args.tov == 'train':
+  if args.train_or_valid == 'train':
     train_model()
-  elif args.tov == 'valid':
+  elif args.train_or_valid == 'valid':
     valid_model()
 
 def main():
@@ -21,14 +20,14 @@ def main():
                       help="Specify the path to models.")
   parser.add_argument("--showbox", action="store_true",
                       help="Options decide the box of faces whether to show.")
+  parser.add_argument("train_or_valid", default="train", type=str,
+                      help="Train or va")
   args = parser.parse_args()
   func = args.func
   print(args)
   if func == "demo":
     run_demo(args)
   elif func == "model":
-    parser.add_argument("tov", default="train", type=str,
-                        help="Train or Valid models.")
     run_model(args)
   else :
     print("usage: python3 main.py <function>")
