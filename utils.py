@@ -1,11 +1,9 @@
-import pandas as pd
-import numpy as np
-
-from tensorflow.python.framework import random_seed
-from tensorflow.python.framework import dtypes
-
 import collections
+
 import cv2
+import numpy as np
+import pandas as pd
+from tensorflow.python.framework import dtypes, random_seed
 
 
 def load_data(data_file):
