@@ -75,8 +75,8 @@ def draw_emotion():
   pass
 
 def demo(modelPath, showBox=False):
-  x = tf.placeholder(tf.float32, [None, 2304])
-  y_conv = deepnn(x)
+  face_x = tf.placeholder(tf.float32, [None, 2304])
+  y_conv = deepnn(face_x)
   probs = tf.nn.softmax(y_conv)
 
   saver = tf.train.Saver()
@@ -107,7 +107,7 @@ def demo(modelPath, showBox=False):
       if detected_face is not None:
         cv2.imwrite('a.jpg', detected_face)
         tensor = image_to_tensor(detected_face)
-        result = sess.run(probs, feed_dict={x: tensor})
+        result = sess.run(probs, feed_dict={face_x: tensor})
         # print(result)
     if result is not None:
       for index, emotion in enumerate(EMOTIONS):

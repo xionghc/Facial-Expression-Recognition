@@ -19,7 +19,6 @@ Then run the demo that Detecting the face(s) in video captured by webcamera, and
 ```shell
 python3 main.py demo
 ```
-And you can add `--showbox` option to show box of faces.
 
 ###### train models
 You can train models by yourself. Download the fer2013 datasets in [kaggle(91.97MB)](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data).
