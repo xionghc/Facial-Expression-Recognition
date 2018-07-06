@@ -5,7 +5,7 @@ import tensorflow as tf
 flags =  tf.app.flags
 flags.DEFINE_string('MODE', 'demo', 
                     'Set program to run in different mode, include train, valid and demo.')
-flags.DEFINE_string('checkpoint_dir', './models', 
+flags.DEFINE_string('checkpoint_dir', './ckpt', 
                     'Path to model file.')
 flags.DEFINE_string('train_data', './data/fer2013/fer2013.csv',
                     'Path to training data.')
