@@ -1,37 +1,29 @@
-import argparse
-
 from demo import demo
 from model import train_model, valid_model
+import tensorflow as tf
 
-
-def run_demo(args):
-  demo(args.modelPath, args.showbox)
-
-def run_model(args):
-  if args.train_or_valid == 'train':
-    train_model()
-  elif args.train_or_valid == 'valid':
-    valid_model()
+flags =  tf.app.flags
+flags.DEFINE_string('MODE', 'demo', 
+                    'Set program to run in different mode, include train, valid and demo.')
+flags.DEFINE_string('checkpoint_dir', './models', 
+                    'Path to model file.')
+flags.DEFINE_string('train_data', './data/fer2013/fer2013.csv',
+                    'Path to training data.')
+flags.DEFINE_string('valid_data', './valid_sets/',
+                    'Path to training data.')
+flags.DEFINE_boolean('show_box', False, 
+                    'If true, the results will show detection box')
+FLAGS = flags.FLAGS
 
 def main():
-  parser = argparse.ArgumentParser()
-  parser.add_argument("func", type=str,
-                      help="Choose a func you want to run. <Demo> or <model>")
-  parser.add_argument("--modelPath", default="./models", type=str,
-                      help="Specify the path to models.")
-  parser.add_argument("--showbox", action="store_true",
-                      help="Options decide the box of faces whether to show.")
-  parser.add_argument("train_or_valid", default="train", type=str,
-                      help="Train or va")
-  args = parser.parse_args()
-  func = args.func
-  print(args)
-  if func == "demo":
-    run_demo(args)
-  elif func == "model":
-    run_model(args)
-  else :
-    print("usage: python3 main.py <function>")
+  assert FLAGS.MODE in ('train', 'valid', 'demo')
+  
+  if FLAGS.MODE == 'demo':
+    demo(FLAGS.checkpoint_dir, FLAGS.show_box)
+  elif FLAGS.MODE == 'train':
+    train_model(FLAGS.train_data)
+  elif FLAGS.MODE == 'valid':
+    valid_model(FLAGS.checkpoint_dir, FLAGS.valid_data)
 
 if __name__ == '__main__':
   main()
