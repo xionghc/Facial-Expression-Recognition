@@ -84,7 +84,7 @@ def demo(modelPath, showBox=False):
   sess = tf.Session()
   if ckpt and ckpt.model_checkpoint_path:
     saver.restore(sess, ckpt.model_checkpoint_path)
-    print('Restore model sucsses!!')
+    print('Restore model sucsses!!\nNOTE: Press SPACE on keyboard to capture face.')
 
   feelings_faces = []
   for index, emotion in enumerate(EMOTIONS):
@@ -122,5 +122,3 @@ def demo(modelPath, showBox=False):
     if cv2.waitKey(1) & 0xFF == ord('q'):
       break
 
-if __name__ == '__main__':
-  demo('./models')

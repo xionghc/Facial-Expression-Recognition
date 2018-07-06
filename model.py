@@ -64,8 +64,8 @@ def bias_variable(shape):
   return tf.Variable(initial)
 
 
-def train_model():
-  fer2013 = input_data('./data/fer2013/fer2013.csv')
+def train_model(train_data):
+  fer2013 = input_data(train_data)
   max_train_steps = 30001
 
   x = tf.placeholder(tf.float32, [None, 2304])
@@ -121,46 +121,26 @@ def image_to_tensor(image):
   return tensor
 
 
-def valid_model():
+def valid_model(modelPath, validFile):
   x = tf.placeholder(tf.float32, [None, 2304])
   y_conv = deepnn(x)
   probs = tf.nn.softmax(y_conv)
 
   saver = tf.train.Saver()
-  ckpt = tf.train.get_checkpoint_state('./models/')
+  ckpt = tf.train.get_checkpoint_state(modelPath)
 
   with tf.Session() as sess:
     print(ckpt.model_checkpoint_path)
     if ckpt and ckpt.model_checkpoint_path:
       saver.restore(sess, ckpt.model_checkpoint_path)
       print('Restore model sucsses!!')
-    VALID_SETS = './valid_sets/'
-    files = os.listdir(VALID_SETS)
+
+    files = os.listdir(validFile)
 
     for file in files:
       if file.endswith('.jpg'):
-        image_file = os.path.join(VALID_SETS, file)
+        image_file = os.path.join(validFile, file)
         image = cv2.imread(image_file, cv2.IMREAD_GRAYSCALE)
         tensor = image_to_tensor(image)
         result = sess.run(probs, feed_dict={x: tensor})
         print(file, EMOTIONS[result.argmax()])
-
-
-def show_usage():
-  usage = ("*------------------------------------*\n"
-           "|Usage: python3 model.py <train|valid>|\n"
-           "*------------------------------------*")
-  print(usage)
-
-
-if __name__ == '__main__':
-  args = sys.argv
-  if len(args) < 2:
-    show_usage()
-    exit()
-  if args[1] == 'train':
-    tf.app.run(main=train_model)
-  elif args[1] == 'valid':
-    valid_model()
-  else:
-    show_usage()
