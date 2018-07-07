@@ -18,7 +18,7 @@ To run the demo, just type:
 ```shell
 python3 main.py
 ```
-Then the program will creat a window to display the scene capture by webcamera. You need press `SPACE` key on keyboard to capture face in current frame and recognize the facial expression.
+Then the program will creat a window to display the scene capture by webcamera. You need press <kbd>SPACE</kbd> key to capture face in current frame and recognize the facial expression.
 
 If you just want to run this demo instead of training the model from scaratch, the following content can be skipped.
 
